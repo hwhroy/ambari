@@ -234,7 +234,7 @@ class DeleteIdentityHandler {
     }
 
     private Set<String> serviceNames() {
-      return componentFilter().stream().map(component -> component.getServiceName()).collect(toSet());
+      return componentFilter().stream().map(Component::getServiceName).collect(toSet());
     }
 
     private List<Component> componentFilter() {
