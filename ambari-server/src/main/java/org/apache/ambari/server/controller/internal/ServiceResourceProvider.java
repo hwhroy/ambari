@@ -276,8 +276,7 @@ public class ServiceResourceProvider extends AbstractControllerResourceProvider 
       setResourceProperty(resource, SERVICE_SERVICE_TYPE_PROPERTY_ID,
         response.getServiceType(), requestedIds);
       setResourceProperty(resource, SERVICE_SERVICE_STATE_PROPERTY_ID,
-          calculateServiceState(response.getClusterName(), response.getServiceName()),
-          requestedIds);
+          calculateServiceState(response.getClusterName(), response.getServiceType(), response.getServiceName()), requestedIds);
       setResourceProperty(resource, SERVICE_MAINTENANCE_STATE_PROPERTY_ID,
           response.getMaintenanceState(), requestedIds);
       setResourceProperty(resource, SERVICE_CREDENTIAL_STORE_SUPPORTED_PROPERTY_ID,
@@ -1004,9 +1003,9 @@ public class ServiceResourceProvider extends AbstractControllerResourceProvider 
   }
 
   // calculate the service state, accounting for the state of the host components
-  private String calculateServiceState(String clusterName, String serviceName) {
-    ServiceCalculatedState serviceCalculatedState = ServiceCalculatedStateFactory.getServiceStateProvider(serviceName);
-    return serviceCalculatedState.getState(clusterName, serviceName).toString();
+  private State calculateServiceState(String clusterName, String serviceType, String serviceName) {
+    ServiceCalculatedState serviceCalculatedState = ServiceCalculatedStateFactory.getServiceStateProvider(serviceType);
+    return serviceCalculatedState.getState(clusterName, serviceName);
   }
 
   /**
